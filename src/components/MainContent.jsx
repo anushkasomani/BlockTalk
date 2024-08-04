@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react';
 import './css/MainContent.css';
 import Post from './Post';
 import Tweet from './Tweet';
-import {ethers} from 'ethers';
+import { ethers } from 'ethers';
 import Twitter from '../jsonFiles/BlockTalkContract.json';
 
-function MainContent({personal}) {
-  const TwitterContractAddress="0xB918f0Dd469600a45D2cC12a2B6b7b0745755D22";
+function MainContent({ personal }) {
+  const TwitterContractAddress = "0xB918f0Dd469600a45D2cC12a2B6b7b0745755D22";
   const [post, setPost] = useState([]);
 
   const getUpdatedTweets = (allTweets, address) => {
     let updatedTweets = [];
-  
-    for(let i = 0; i < allTweets.length; i++) {
+
+    for (let i = 0; i < allTweets.length; i++) {
       const tweet = allTweets[i];
       const isPersonal = tweet.username.toLowerCase() === address.toLowerCase();
       const updatedTweet = {
@@ -27,17 +27,17 @@ function MainContent({personal}) {
         'reward': tweet.reward,
         'personal': isPersonal
       };
-  
+
       updatedTweets.push(updatedTweet);
     }
     return updatedTweets;
   }
 
-  const getTweets = async() => {
+  const getTweets = async () => {
     try {
-      const {ethereum} = window
+      const { ethereum } = window
 
-      if(ethereum) {
+      if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const TwitterContract = new ethers.Contract(
@@ -53,7 +53,7 @@ function MainContent({personal}) {
       } else {
         console.log("Ethereum object doesn't exist");
       }
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -95,14 +95,18 @@ function MainContent({personal}) {
 
       <h2>Home</h2>
 
-      <Post/>
+      <Post />
 
       {post.map((post) => (
         <Tweet
           key={post.id}
           displayName={post.username}
+          title={post.tweetTitle}
           text={post.tweetText}
+          time={post.time}
           personal={post.personal}
+          upvotes={post.upvotes}
+          downvotes={post.downvotes}
         />
       ))}
     </div>

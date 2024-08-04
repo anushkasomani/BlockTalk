@@ -1,5 +1,5 @@
 import React from 'react';
-import './RightSidebar.css';
+import './css/RightSidebar.css';
 
 const RightSidebar = () => {
   return (

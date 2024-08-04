@@ -1,5 +1,5 @@
 import React from 'react';
-import './Tweet.css'
+import './css/Tweet.css'
 import { forwardRef } from 'react';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';

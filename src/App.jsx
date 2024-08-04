@@ -4,7 +4,6 @@ import Sidebar from './components/Sidebar';
 import MainContent from './components/MainContent';
 import RightSidebar from './components/RightSidebar';
 import Init from './components/Init'; 
-import Tweet from './components/Tweet';
 
 function App() {
   const [currentAccount, setCurrentAccount] = useState('');
@@ -64,8 +63,6 @@ function App() {
           <Sidebar />
           <MainContent />
           <RightSidebar />
-
-          
         </div>
       ) : (
         <div className='flex flex-col justify-center items-center mb-20 font-bold text-2xl gap-y-3'>

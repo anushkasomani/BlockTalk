@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import './MainContent.css'
+import './css/MainContent.css';
 import Post from './Post';
 import Tweet from './Tweet';
 import {ethers} from 'ethers';
 import Twitter from '../jsonFiles/BlockTalkContract.json';
-
 
 function MainContent({personal}) {
   const TwitterContractAddress="0xB918f0Dd469600a45D2cC12a2B6b7b0745755D22";
@@ -92,10 +91,9 @@ function MainContent({personal}) {
   // }
 
   return (
-    <div className="feed">
-      <div className="feed__header">
-        <h2>Home</h2>
-      </div>
+    <div className="main-content feed">
+
+      <h2>Home</h2>
 
       <Post/>
 

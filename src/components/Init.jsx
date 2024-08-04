@@ -1,5 +1,5 @@
 import React from 'react';
-import './Init.css';
+import './css/Init.css';
 
 function Init({ connectWallet }) {
   return (

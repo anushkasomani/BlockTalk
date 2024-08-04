@@ -1,21 +1,19 @@
 import React from 'react';
 import './Tweet.css'
 import { forwardRef } from 'react';
-import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
-import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
-import RepeatIcon from "@material-ui/icons/Repeat";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import PublishIcon from "@material-ui/icons/Publish";
-import DeleteIcon from '@material-ui/icons/Delete';
-
-
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import RepeatIcon from '@mui/icons-material/Repeat';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import PublishIcon from '@mui/icons-material/Publish';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Tweet = forwardRef(
   ({ displayName, text, personal }, ref) => {
 
     return (
       <div className="post" ref={ref}>
-        
+
         <div className="post__body">
           <div className="post__header">
             <div className="post__headerText">

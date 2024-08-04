@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './MainContent.css'
-import FlipMove from 'react-flip-move'
 import Post from './Post';
 import Tweet from './Tweet';
 import {ethers} from 'ethers';

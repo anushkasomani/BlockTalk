@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const blockroutes = require('./routes/blockroutes');
 
 const app = express();
-const port = 3006;
+const port = 3004;
 
 
 
@@ -40,7 +40,7 @@ app.set('view engine', 'ejs');
 
 
 app.get('/html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.render('index');
 });
 
 // Start the Server

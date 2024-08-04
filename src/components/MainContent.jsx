@@ -1,30 +1,115 @@
 import React, { useEffect, useState } from 'react';
 import './MainContent.css'
+import FlipMove from 'react-flip-move'
+import Post from './Post';
+import Tweet from './Tweet';
+import {ethers} from 'ethers';
+import Twitter from '../jsonFiles/BlockTalkContract.json';
 
-function App() {
-  const [htmlContent, setHtmlContent] = useState('');
-  const [message, setMessage] = useState(''); // Added state for message
+
+function MainContent({personal}) {
+  const TwitterContractAddress="0xB918f0Dd469600a45D2cC12a2B6b7b0745755D22";
+  const [post, setPost] = useState([]);
+
+  const getUpdatedTweets = (allTweets, address) => {
+    let updatedTweets = [];
+  
+    for(let i = 0; i < allTweets.length; i++) {
+      const tweet = allTweets[i];
+      const isPersonal = tweet.username.toLowerCase() === address.toLowerCase();
+      const updatedTweet = {
+        'id': tweet.id,
+        'tweetTitle': tweet.title,
+        'tweetText': tweet.tweetText,
+        'isDeleted': tweet.isDeleted,
+        'username': tweet.username,
+        'upvotes': tweet.upvotes,
+        'downvotes': tweet.downvotes,
+        'time': tweet.time,
+        'reward': tweet.reward,
+        'personal': isPersonal
+      };
+  
+      updatedTweets.push(updatedTweet);
+    }
+    return updatedTweets;
+  }
+
+  const getTweets = async() => {
+    try {
+      const {ethereum} = window
+
+      if(ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const TwitterContract = new ethers.Contract(
+          TwitterContractAddress,
+          Twitter.abi,
+          signer
+        )
+
+        let allTweets = await TwitterContract.getAllTweets();
+        let updatedTweets = getUpdatedTweets(allTweets, ethereum.selectedAddress);
+        setPost(updatedTweets);
+        console.log(post);
+      } else {
+        console.log("Ethereum object doesn't exist");
+      }
+    } catch(error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
-    fetch('http://localhost:3006/html')
-      .then((response) => response.text()) // Use response.text() for HTML content
-      .then((data) => setHtmlContent(data))
-      .catch((error) => console.error('Error fetching data:', error));
+    getTweets();
   }, []);
 
+  // const deleteTweet = key => async() => {
+  //   console.log(key);
+
+  //   // Now we got the key, let's delete our tweet
+  //   try {
+  //     const {ethereum} = window
+
+  //     if(ethereum) {
+  //       const provider = new ethers.providers.Web3Provider(ethereum);
+  //       const signer = provider.getSigner();
+  //       const TwitterContract = new ethers.Contract(
+  //         TwitterContractAddress,
+  //         Twitter.abi,
+  //         signer
+  //       );
+
+  //       let deleteTweetTx = await TwitterContract.deleteTweet(key, true);
+  //       let allTweets = await TwitterContract.getAllTweets();
+  //       setPosts(getUpdatedTweets(allTweets, ethereum.selectedAddress));
+  //     } else {
+  //       console.log("Ethereum object doesn't exist");
+  //     }
+
+  //   } catch(error) {
+  //     console.log(error);
+  //   }
+  // }
+
   return (
-    <div className="main-content">
-      <div className="post-box">
-        <div className="post-box-header">What is happening?!</div>
-        <div className="post-box-content">
-          <input type="text" placeholder="What's happening?" />
-          <button>Post</button>
-        </div>
+    <div className="feed">
+      <div className="feed__header">
+        <h2>Home</h2>
       </div>
-      <h1>{message}</h1>
-      <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+
+      <Post/>
+
+      {post.map((post) => (
+        <Tweet
+          key={post.id}
+          displayName={post.username}
+          text={post.tweetText}
+          personal={post.personal}
+        />
+      ))}
     </div>
   );
 }
 
-export default App;
+export default MainContent;

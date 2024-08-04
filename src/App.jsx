@@ -3,27 +3,78 @@ import './App.css';
 import Sidebar from './components/Sidebar';
 import MainContent from './components/MainContent';
 import RightSidebar from './components/RightSidebar';
-
-
+import Init from './components/Init'; 
+import Tweet from './components/Tweet';
 
 function App() {
-  // const [message, setMessage] = useState('');
+  const [currentAccount, setCurrentAccount] = useState('');
+  const [correctNetwork, setCorrectNetwork] = useState(false);
 
-  // useEffect(() => {
-  //   fetch('http://localhost:3005/api/hello')
-  //     .then((response) => response.json())
-  //     .then((data) => setMessage(data.message))
-  //     .catch((error) => console.error('Error fetching data:', error));
-  // }, []);
+  const connectWallet = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (!ethereum) {
+        console.log('Metamask not detected');
+        return;
+      }
+
+      let chainId = await ethereum.request({ method: 'eth_chainId' });
+      console.log('Connected to chain:' + chainId);
+      const sepoliaChainId = '0xaa36a7';
+
+      if (chainId !== sepoliaChainId) {
+        alert('You are not connected to the Sepolia Testnet!');
+        return;
+      }
+
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+
+      console.log('Found account', accounts[0]);
+      setCurrentAccount(accounts[0]);
+    } catch (error) {
+      console.log('Error connecting to metamask', error);
+    }
+  };
+
+  const checkCorrectNetwork = async () => {
+    const { ethereum } = window;
+    if (!ethereum) return;
+
+    let chainId = await ethereum.request({ method: 'eth_chainId' });
+    console.log('Connected to chain:' + chainId);
+
+    const sepoliaChainId = '0xaa36a7';
+
+    setCorrectNetwork(chainId === sepoliaChainId);
+  };
+
+  useEffect(() => {
+    if (currentAccount) {
+      checkCorrectNetwork();
+    }
+  }, [currentAccount]);
 
   return (
-    <div className='app'>
-      
-      <Sidebar></Sidebar>
-    <MainContent></MainContent>
-    <RightSidebar></RightSidebar>
-      
+    <div>
+      {currentAccount === '' ? (
+        <Init connectWallet={connectWallet} />
+      ) : correctNetwork ? (
+        <div className="app">
+          <Sidebar />
+          <MainContent />
+          <RightSidebar />
 
+          
+        </div>
+      ) : (
+        <div className='flex flex-col justify-center items-center mb-20 font-bold text-2xl gap-y-3'>
+          <div>----------------------------------------</div>
+          <div>Please connect to the Sepolia Testnet</div>
+          <div>and reload the page</div>
+          <div>----------------------------------------</div>
+        </div>
+      )}
     </div>
   );
 }

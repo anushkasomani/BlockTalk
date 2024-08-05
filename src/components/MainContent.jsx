@@ -23,7 +23,7 @@ function MainContent({ personal }) {
         'username': tweet.username,
         'upvote': tweet.upvote._hex,
         'downvote': tweet.downvote._hex,
-        'time': tweet.time,
+        'time': tweet.time._hex,
         'reward': tweet.reward,
         'personal': isPersonal
       };

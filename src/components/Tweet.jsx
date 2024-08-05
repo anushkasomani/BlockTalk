@@ -12,14 +12,13 @@ const Tweet = forwardRef(
   ({ displayName, title, text, time, personal, upvote, downvote }, ref) => {
 
     return (
-      <div className="post">
+      <div className="post" ref={ref}>
         <div className="post__body">
-          <h2>{title}</h2>
+          <h2 className="post__title">{title}</h2>
           <div className="post__header">
             <div className="post__headerText">
-              <h3>
-                {displayName}{" "}
-              </h3>
+              <h3 className="post__displayName">{displayName}</h3>
+              <span className="post__time">{time}</span> {/* Optional time display */}
             </div>
             <div className="post__headerDescription">
               <p>{text}</p>
@@ -28,11 +27,12 @@ const Tweet = forwardRef(
           <div className="post__footer">
             <ChatBubbleOutlineIcon fontSize="small" />
             <RepeatIcon fontSize="small" />
-            <FavoriteBorderIcon fontSize="small" />{upvote}
-            <PublishIcon fontSize="small" />{downvote}
+            <FavoriteBorderIcon fontSize="small" /> {upvote}
+            <PublishIcon fontSize="small" /> {downvote}
+            {/* Uncomment for delete icon functionality */}
             {/* {personal ? (
               <DeleteIcon fontSize="small" onClick={onClick}/>
-            ) : ("")} */}
+            ) : null} */}
           </div>
         </div>
       </div>

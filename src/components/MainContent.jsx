@@ -21,8 +21,8 @@ function MainContent({ personal }) {
         'tweetText': tweet.tweetText,
         'isDeleted': tweet.isDeleted,
         'username': tweet.username,
-        'upvotes': tweet.upvotes,
-        'downvotes': tweet.downvotes,
+        'upvote': tweet.upvote._hex,
+        'downvote': tweet.downvote._hex,
         'time': tweet.time,
         'reward': tweet.reward,
         'personal': isPersonal
@@ -49,7 +49,6 @@ function MainContent({ personal }) {
         let allTweets = await TwitterContract.getAllTweets();
         let updatedTweets = getUpdatedTweets(allTweets, ethereum.selectedAddress);
         setPost(updatedTweets);
-        console.log(post);
       } else {
         console.log("Ethereum object doesn't exist");
       }
@@ -90,6 +89,7 @@ function MainContent({ personal }) {
   //   }
   // }
 
+  console.log(post);
   return (
     <div className="main-content feed">
 
@@ -105,8 +105,8 @@ function MainContent({ personal }) {
           text={post.tweetText}
           time={post.time}
           personal={post.personal}
-          upvotes={post.upvotes}
-          downvotes={post.downvotes}
+          upvote={post.upvote}
+          downvote={post.downvote}
         />
       ))}
     </div>

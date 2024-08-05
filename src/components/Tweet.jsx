@@ -9,7 +9,7 @@ import PublishIcon from '@mui/icons-material/Publish';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const Tweet = forwardRef(
-  ({ displayName, title, text, time, personal, upvotes, downvotes }, ref) => {
+  ({ displayName, title, text, time, personal, upvote, downvote }, ref) => {
 
     return (
       <div className="post">
@@ -28,8 +28,8 @@ const Tweet = forwardRef(
           <div className="post__footer">
             <ChatBubbleOutlineIcon fontSize="small" />
             <RepeatIcon fontSize="small" />
-            <FavoriteBorderIcon fontSize="small" />{upvotes}
-            <PublishIcon fontSize="small" />{downvotes}
+            <FavoriteBorderIcon fontSize="small" />{upvote}
+            <PublishIcon fontSize="small" />{downvote}
             {/* {personal ? (
               <DeleteIcon fontSize="small" onClick={onClick}/>
             ) : ("")} */}

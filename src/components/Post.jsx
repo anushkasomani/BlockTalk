@@ -21,7 +21,6 @@ const Post = () => {
           signer
         );
         let twitterTx = await TwitterContract.addTweet(tweetMessage, tweetTitle, false);
-        console.log(JSON.stringify(twitterTx, null, 2));
       } else {
         console.log("Ethereum object doesn't exist!");
       }

@@ -1,27 +1,24 @@
 import React from 'react';
-import './Tweet.css'
+import './css/Tweet.css'
 import { forwardRef } from 'react';
-import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
-import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
-import RepeatIcon from "@material-ui/icons/Repeat";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import PublishIcon from "@material-ui/icons/Publish";
-import DeleteIcon from '@material-ui/icons/Delete';
-
-
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import RepeatIcon from '@mui/icons-material/Repeat';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import PublishIcon from '@mui/icons-material/Publish';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Tweet = forwardRef(
-  ({ displayName, text, personal }, ref) => {
+  ({ displayName, title, text, time, personal, upvote, downvote }, ref) => {
 
     return (
       <div className="post" ref={ref}>
-        
         <div className="post__body">
+          <h2 className="post__title">{title}</h2>
           <div className="post__header">
             <div className="post__headerText">
-              <h3>
-                {displayName}{" "}
-              </h3>
+              <h3 className="post__displayName">{displayName}</h3>
+              <span className="post__time">{time}</span> {/* Optional time display */}
             </div>
             <div className="post__headerDescription">
               <p>{text}</p>
@@ -30,11 +27,12 @@ const Tweet = forwardRef(
           <div className="post__footer">
             <ChatBubbleOutlineIcon fontSize="small" />
             <RepeatIcon fontSize="small" />
-            <FavoriteBorderIcon fontSize="small" />
-            <PublishIcon fontSize="small" />
+            <FavoriteBorderIcon fontSize="small" /> {upvote}
+            <PublishIcon fontSize="small" /> {downvote}
+            {/* Uncomment for delete icon functionality */}
             {/* {personal ? (
               <DeleteIcon fontSize="small" onClick={onClick}/>
-            ) : ("")} */}
+            ) : null} */}
           </div>
         </div>
       </div>

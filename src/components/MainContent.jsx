@@ -16,7 +16,7 @@ function MainContent({ personal }) {
       const tweet = allTweets[i];
       const isPersonal = tweet.username.toLowerCase() === address.toLowerCase();
       const updatedTweet = {
-        'id': tweet.id,
+        'id': tweet.id._hex,
         'tweetTitle': tweet.title,
         'tweetText': tweet.tweetText,
         'isDeleted': tweet.isDeleted,
@@ -89,17 +89,14 @@ function MainContent({ personal }) {
   //   }
   // }
 
-  console.log(post);
   return (
     <div className="main-content feed">
-
       <h2>Home</h2>
-
       <Post />
-
       {post.map((post) => (
         <Tweet
           key={post.id}
+          id={post.id}
           displayName={post.username}
           title={post.tweetTitle}
           text={post.tweetText}
